@@ -1,0 +1,187 @@
+﻿@charset "utf-8";
+*{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+h1,h2,h3,p{
+	margin: 0;
+}
+html,body{
+	background-color: #ecedf4;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #000000;
+}
+a{
+	font-size: 14px;
+	color: #000000;
+	text-decoration: none;
+	font-family:"微软雅黑"
+}
+img{
+	max-width: 100%;
+	vertical-align: middle;
+}
+ul,li{
+	list-style: none;
+}
+ul,li,ol,div{
+	font-size:14px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+h2,h3,h4{
+	font-weight: normal;
+}
+input,textarea{
+	font-family:"微软雅黑"
+}
+i{
+	font-style: normal;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom:1;}
+.header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 99;
+    background-color: #70c7fa;
+}
+.main{
+	width: 1300px;
+	margin: 0 auto;
+}
+.header .main{
+	height: 80px;
+}
+.logo-text{
+	float: left;
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 80px;
+}
+.menu{
+	float: right;
+	padding: 25px 0;
+	line-height: 30px;
+	overflow: hidden;
+}
+.menu li{
+	float: left;
+	margin-left: 20px;
+	font-size: 16px;
+}
+.menu li a{
+	color: #FF0404;
+	font-size: 16px;
+}
+.inwrap{
+	padding-top: 50px;
+}
+.panel{
+	padding: 30px;
+	background-color: #FFFFFF;
+}
+.gd-main{
+	position: relative;
+	border: 1px solid #ccdce9;
+	border-radius: 4px;
+	float: left;
+	width: 100%;
+	height: 580px;
+}
+.gd-sidebar{
+	width: 320px;
+	float: right;
+}
+.gd-side-panel{
+	border: 1px solid #ccdce9;
+	border-radius: 4px;
+	height: 520px;
+}
+.gd-form{
+	position: relative;
+	padding-left: 60px;
+	padding-right: 80px;
+	height: 45px;
+	margin-bottom: 15px;
+}
+.gd-form .gd-input{
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
+	text-indent: 14px;
+	outline: none;
+	border-radius: 4px;
+	border: 1px solid #ccdce9;
+}
+.gd-form .txt{
+	font-size: 16px;
+	line-height: 45px;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.gd-form .btn-contact{
+	font-size: 16px;
+	line-height: 45px;
+	position: absolute;
+	height: 45px;
+	width: 66px;
+	background-color: #015293;
+	color: #FFFFFF;
+	outline: none;
+	border: 0;
+	cursor: pointer;
+	border-radius: 4px;
+	right: 0;
+	top: 0;
+}
+.gd-container {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -200px;
+    height: 400px;
+    width: 100%;
+    background: url(../images1/机场跑道1.png) center no-repeat;
+}
+.lists{
+	overflow: hidden;
+	padding: 15px;
+}
+.gd-item{
+	float: left;
+	margin: 4px;
+	width: 32px;
+	height: 32px;
+	border-radius: 32px;
+	cursor:pointer;
+	line-height: 32px;
+	font-size: 14px;
+	text-align: center;
+	color: #FFFFFF;
+	/*background-image: linear-gradient(#6bbbfc, #055697);*/
+}
+.gd-inner{
+	padding: 80px 120px;
+}
+

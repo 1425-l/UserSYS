@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SysInfoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdminUser" Type="char" MaxLength="20" />
+          <Property Name="AdminPwd" Type="char" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="adress">
+          <Key>
+            <PropertyRef Name="SenID" />
+          </Key>
+          <Property Name="SenID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="X" Type="int" />
+          <Property Name="Y" Type="int" />
+        </EntityType>
+        <EntityType Name="New_Soy">
+          <Key>
+            <PropertyRef Name="new_SoyID" />
+          </Key>
+          <Property Name="new_SoyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="new_SenID" Type="int" Nullable="false" />
+          <Property Name="new_SenIP" Type="char" MaxLength="50" />
+          <Property Name="new_SenZt" Type="char" MaxLength="10" />
+          <Property Name="new_SoYTime" Type="datetime" />
+          <Property Name="new_UserID" Type="int" />
+          <Property Name="new_Z" Type="char" MaxLength="10" />
+          <Property Name="new_D" Type="char" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Pic">
+          <Key>
+            <PropertyRef Name="PicID" />
+          </Key>
+          <Property Name="PicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PicUrl" Type="char" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SensorInfo">
+          <Key>
+            <PropertyRef Name="SenID" />
+          </Key>
+          <Property Name="SenID" Type="int" Nullable="false" />
+          <Property Name="DID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="IP" Type="char" MaxLength="50" />
+          <Property Name="SFType" Type="int" />
+          <Property Name="ZID" Type="nchar" MaxLength="10" />
+          <Property Name="SenZT" Type="nchar" MaxLength="10" />
+          <Property Name="SenName" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SoY">
+          <Key>
+            <PropertyRef Name="SoyID" />
+          </Key>
+          <Property Name="SoyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenID" Type="int" />
+          <Property Name="SenIP" Type="char" MaxLength="50" />
+          <Property Name="SenZt" Type="char" MaxLength="10" />
+          <Property Name="SoYTime" Type="datetime" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Sys">
+          <Key>
+            <PropertyRef Name="SysID" />
+          </Key>
+          <Property Name="SysID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="SysTime" Type="datetime" />
+          <Property Name="HName" Type="char" MaxLength="10" />
+          <Property Name="UserIP" Type="char" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Syssz">
+          <Key>
+            <PropertyRef Name="SysszID" />
+          </Key>
+          <Property Name="SysszID" Type="int" Nullable="false" />
+          <Property Name="Tite" Type="nchar" MaxLength="50" />
+          <Property Name="pic" Type="nchar" MaxLength="200" />
+          <Property Name="date" Type="date" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="char" MaxLength="10" />
+          <Property Name="UserPwd" Type="char" MaxLength="100" />
+          <Property Name="Logintime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_New_Soy_New_Soy">
+          <End Role="SensorInfo" Type="Self.SensorInfo" Multiplicity="1" />
+          <End Role="New_Soy" Type="Self.New_Soy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SensorInfo">
+              <PropertyRef Name="SenID" />
+            </Principal>
+            <Dependent Role="New_Soy">
+              <PropertyRef Name="new_SenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_New_Soy_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="New_Soy" Type="Self.New_Soy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="New_Soy">
+              <PropertyRef Name="new_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SENSORIN_RELATIONS_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SensorInfo" Type="Self.SensorInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SensorInfo">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOY_RELATIONS_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SoY" Type="Self.SoY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SoY">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_RELATIONS_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Sys" Type="Self.Sys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Sys">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SysInfoModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="adress" EntityType="Self.adress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="New_Soy" EntityType="Self.New_Soy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pic" EntityType="Self.Pic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SensorInfo" EntityType="Self.SensorInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SoY" EntityType="Self.SoY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys" EntityType="Self.Sys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Syssz" EntityType="Self.Syssz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_New_Soy_New_Soy" Association="Self.FK_New_Soy_New_Soy">
+            <End Role="SensorInfo" EntitySet="SensorInfo" />
+            <End Role="New_Soy" EntitySet="New_Soy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_New_Soy_User" Association="Self.FK_New_Soy_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="New_Soy" EntitySet="New_Soy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SENSORIN_RELATIONS_USER" Association="Self.FK_SENSORIN_RELATIONS_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="SensorInfo" EntitySet="SensorInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOY_RELATIONS_USER" Association="Self.FK_SOY_RELATIONS_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="SoY" EntitySet="SoY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_RELATIONS_USER" Association="Self.FK_SYS_RELATIONS_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="Sys" EntitySet="Sys" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SysInfoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdminUser" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="AdminPwd" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="adress">
+          <Key>
+            <PropertyRef Name="SenID" />
+          </Key>
+          <Property Name="SenID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="X" Type="Int32" />
+          <Property Name="Y" Type="Int32" />
+        </EntityType>
+        <EntityType Name="New_Soy">
+          <Key>
+            <PropertyRef Name="new_SoyID" />
+          </Key>
+          <Property Name="new_SoyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="new_SenID" Type="Int32" Nullable="false" />
+          <Property Name="new_SenIP" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="new_SenZt" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="new_SoYTime" Type="DateTime" Precision="3" />
+          <Property Name="new_UserID" Type="Int32" />
+          <Property Name="new_Z" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="new_D" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="SensorInfo" Relationship="Self.FK_New_Soy_New_Soy" FromRole="New_Soy" ToRole="SensorInfo" />
+          <NavigationProperty Name="User" Relationship="Self.FK_New_Soy_User" FromRole="New_Soy" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Pic">
+          <Key>
+            <PropertyRef Name="PicID" />
+          </Key>
+          <Property Name="PicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PicUrl" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SensorInfo">
+          <Key>
+            <PropertyRef Name="SenID" />
+          </Key>
+          <Property Name="SenID" Type="Int32" Nullable="false" />
+          <Property Name="DID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="SFType" Type="Int32" />
+          <Property Name="ZID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SenZT" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SenName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="New_Soy" Relationship="Self.FK_New_Soy_New_Soy" FromRole="SensorInfo" ToRole="New_Soy" />
+          <NavigationProperty Name="User" Relationship="Self.FK_SENSORIN_RELATIONS_USER" FromRole="SensorInfo" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SoY">
+          <Key>
+            <PropertyRef Name="SoyID" />
+          </Key>
+          <Property Name="SoyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenID" Type="Int32" />
+          <Property Name="SenIP" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="SenZt" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="SoYTime" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_SOY_RELATIONS_USER" FromRole="SoY" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Sys">
+          <Key>
+            <PropertyRef Name="SysID" />
+          </Key>
+          <Property Name="SysID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="SysTime" Type="DateTime" Precision="3" />
+          <Property Name="HName" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="UserIP" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_SYS_RELATIONS_USER" FromRole="Sys" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Syssz">
+          <Key>
+            <PropertyRef Name="SysszID" />
+          </Key>
+          <Property Name="SysszID" Type="Int32" Nullable="false" />
+          <Property Name="Tite" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="pic" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="UserPwd" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="Logintime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="New_Soy" Relationship="Self.FK_New_Soy_User" FromRole="User" ToRole="New_Soy" />
+          <NavigationProperty Name="SensorInfo" Relationship="Self.FK_SENSORIN_RELATIONS_USER" FromRole="User" ToRole="SensorInfo" />
+          <NavigationProperty Name="SoY" Relationship="Self.FK_SOY_RELATIONS_USER" FromRole="User" ToRole="SoY" />
+          <NavigationProperty Name="Sys" Relationship="Self.FK_SYS_RELATIONS_USER" FromRole="User" ToRole="Sys" />
+        </EntityType>
+        <Association Name="FK_New_Soy_New_Soy">
+          <End Role="SensorInfo" Type="Self.SensorInfo" Multiplicity="1" />
+          <End Role="New_Soy" Type="Self.New_Soy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SensorInfo">
+              <PropertyRef Name="SenID" />
+            </Principal>
+            <Dependent Role="New_Soy">
+              <PropertyRef Name="new_SenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_New_Soy_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="New_Soy" Type="Self.New_Soy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="New_Soy">
+              <PropertyRef Name="new_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SENSORIN_RELATIONS_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SensorInfo" Type="Self.SensorInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SensorInfo">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOY_RELATIONS_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SoY" Type="Self.SoY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SoY">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SYS_RELATIONS_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Sys" Type="Self.Sys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Sys">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SysInfoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin" EntityType="Self.Admin" />
+          <EntitySet Name="adress" EntityType="Self.adress" />
+          <EntitySet Name="New_Soy" EntityType="Self.New_Soy" />
+          <EntitySet Name="Pic" EntityType="Self.Pic" />
+          <EntitySet Name="SensorInfo" EntityType="Self.SensorInfo" />
+          <EntitySet Name="SoY" EntityType="Self.SoY" />
+          <EntitySet Name="Sys" EntityType="Self.Sys" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Syssz" EntityType="Self.Syssz" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_New_Soy_New_Soy" Association="Self.FK_New_Soy_New_Soy">
+            <End Role="SensorInfo" EntitySet="SensorInfo" />
+            <End Role="New_Soy" EntitySet="New_Soy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_New_Soy_User" Association="Self.FK_New_Soy_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="New_Soy" EntitySet="New_Soy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SENSORIN_RELATIONS_USER" Association="Self.FK_SENSORIN_RELATIONS_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="SensorInfo" EntitySet="SensorInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOY_RELATIONS_USER" Association="Self.FK_SOY_RELATIONS_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="SoY" EntitySet="SoY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_RELATIONS_USER" Association="Self.FK_SYS_RELATIONS_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="Sys" EntitySet="Sys" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SysInfoModelStoreContainer" CdmEntityContainer="SysInfoEntities">
+          <EntitySetMapping Name="Admin">
+            <EntityTypeMapping TypeName="SysInfoModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AdminUser" ColumnName="AdminUser" />
+                <ScalarProperty Name="AdminPwd" ColumnName="AdminPwd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="adress">
+            <EntityTypeMapping TypeName="SysInfoModel.adress">
+              <MappingFragment StoreEntitySet="adress">
+                <ScalarProperty Name="SenID" ColumnName="SenID" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="New_Soy">
+            <EntityTypeMapping TypeName="SysInfoModel.New_Soy">
+              <MappingFragment StoreEntitySet="New_Soy">
+                <ScalarProperty Name="new_SoyID" ColumnName="new_SoyID" />
+                <ScalarProperty Name="new_SenID" ColumnName="new_SenID" />
+                <ScalarProperty Name="new_SenIP" ColumnName="new_SenIP" />
+                <ScalarProperty Name="new_SenZt" ColumnName="new_SenZt" />
+                <ScalarProperty Name="new_SoYTime" ColumnName="new_SoYTime" />
+                <ScalarProperty Name="new_UserID" ColumnName="new_UserID" />
+                <ScalarProperty Name="new_Z" ColumnName="new_Z" />
+                <ScalarProperty Name="new_D" ColumnName="new_D" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pic">
+            <EntityTypeMapping TypeName="SysInfoModel.Pic">
+              <MappingFragment StoreEntitySet="Pic">
+                <ScalarProperty Name="PicID" ColumnName="PicID" />
+                <ScalarProperty Name="PicUrl" ColumnName="PicUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SensorInfo">
+            <EntityTypeMapping TypeName="SysInfoModel.SensorInfo">
+              <MappingFragment StoreEntitySet="SensorInfo">
+                <ScalarProperty Name="SenID" ColumnName="SenID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="SFType" ColumnName="SFType" />
+                <ScalarProperty Name="ZID" ColumnName="ZID" />
+                <ScalarProperty Name="SenZT" ColumnName="SenZT" />
+                <ScalarProperty Name="SenName" ColumnName="SenName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SoY">
+            <EntityTypeMapping TypeName="SysInfoModel.SoY">
+              <MappingFragment StoreEntitySet="SoY">
+                <ScalarProperty Name="SoyID" ColumnName="SoyID" />
+                <ScalarProperty Name="SenID" ColumnName="SenID" />
+                <ScalarProperty Name="SenIP" ColumnName="SenIP" />
+                <ScalarProperty Name="SenZt" ColumnName="SenZt" />
+                <ScalarProperty Name="SoYTime" ColumnName="SoYTime" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys">
+            <EntityTypeMapping TypeName="SysInfoModel.Sys">
+              <MappingFragment StoreEntitySet="Sys">
+                <ScalarProperty Name="SysID" ColumnName="SysID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SysTime" ColumnName="SysTime" />
+                <ScalarProperty Name="HName" ColumnName="HName" />
+                <ScalarProperty Name="UserIP" ColumnName="UserIP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SysInfoModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Syssz">
+            <EntityTypeMapping TypeName="SysInfoModel.Syssz">
+              <MappingFragment StoreEntitySet="Syssz">
+                <ScalarProperty Name="SysszID" ColumnName="SysszID" />
+                <ScalarProperty Name="Tite" ColumnName="Tite" />
+                <ScalarProperty Name="pic" ColumnName="pic" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="SysInfoModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPwd" ColumnName="UserPwd" />
+                <ScalarProperty Name="Logintime" ColumnName="Logintime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

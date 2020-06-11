@@ -1,0 +1,322 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+    <title>历史记录</title>
+
+
+    @*<link href="~/Content/jquery-easyui-1.5.5/themes/default/easyui.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/jquery-easyui-1.5.5/themes/icon.css" rel="stylesheet" />
+        <script src="~/Content/jquery-easyui-1.5.5/jquery.min.js"></script>
+        <script src="~/Content/jquery-easyui-1.5.5/jquery.easyui.min.js"></script>
+        <script src="~/Content/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="~/Content/jquery-easyui-1.5.5/locale/easyui-lang-zh_CN.js"></script>*@
+    <link href="~/Content/jquery-easyui-1.5.5/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.5.5/themes/icon.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="~/Content/libs/fontawesome-free-5.9.0-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/libs/metismenu-master/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/Content/libs/web-icons-master/css/web-icons.css" rel="stylesheet" />
+    <link href="~/Content/css/core.css" rel="stylesheet" />
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+    <!--js-->
+    @*<script src="~/Content/js/router.js"></script>*@
+    <script src="~/Content/libs/jquery/jquery-3.2.1.min.js"></script>
+
+    <script src="~/Content/libs/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+
+    <script src="~/Content/libs/metismenu-master/metisMenu.min.js"></script>
+
+    <script src="~/Content/libs/bootstrap-master/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+    <script src="~/Content/jquery-easyui-1.5.5/jquery.easyui.min.js"></script>
+
+    <script src="~/Content/jquery-easyui-1.5.5/locale/easyui-lang-zh_CN.js"></script>
+</head>
+
+
+<body>
+    <div style="margin-top:3%;padding-left:1.5%;padding-right:1.5%;">
+        <table class="table" id="List"></table>
+    </div>
+
+    <!-- 按钮触发模态框 -->
+    <!-- 模态框（Modal） -->
+    
+    <div id="tb">
+        <div style="margin-bottom:5px;margin-top:10px; padding-bottom:5px;border-bottom:#d0d0d0 solid 1px;">
+            @*<a href="#" class="btn btn-info" data-toggle="modal" data-target="#myModal" iconCls="icon-add" plain="true"
+                    id="btnCreate">添加</a>
+                <a href="#" class="btn btn-info" iconCls="icon-edit" plain="true"
+                   id="btnEdit">修改</a>*@
+
+
+            @*<select id="SetUser" data-options="editable:false,panelHeight:'auto'" class="easyui-combobox" name="SetUser" style="width:100px;">
+                    <option value="1">传感器编号:</option>
+                    <option value="2">传感器IP:</option>
+                    <option value="3">传感器状态:</option>
+                    <option value="4">记录时间:</option>
+                </select>
+                <input class="easyui-textbox" type="text" name="UserName" id="UserName" />
+                <a href="#" class="easyui-linkbutton" iconcls="icon-search" id="btnSearch">查询</a>*@
+            <table>
+                <tr>
+                    <td>
+                        <label style="color:black;margin-top:5px;margin-left:5px;">传感器IP:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" placeholder="请输入传感器IP" data-options="required:true" style="width:300px;border:#0094ff solid 1px;" type="text" name="IP" id="IP" />
+                    </td>
+                    <td>
+                        <label style="color:black;margin-top:5px;margin-left:5px;">传感器状态:</label>
+                    </td>
+                    <td>
+                        <input class="form-control" placeholder="请输入传感器状态" data-options="required:true" style="width:300px;border:#0094ff solid 1px;" type="text" name="UserName" id="UserName" />
+                    </td>
+                    <td>
+                        <label style="color:black;margin-top:5px;margin-left:5px;">记录时间:</label>
+                        <input class="easyui-datetimebox" name="timestar" id="timestar"
+                               data-options="required:true,showSeconds:true" value="3/4/2010 2:3" style="width:150px">————
+                        <input class="easyui-datetimebox" name="timestop" id="timestop"
+                               data-options="required:true,showSeconds:true" value="3/4/2010 2:3" style="width:150px">
+                    </td>
+                    <td>
+                        <a href="#" class="easyui-linkbutton" iconcls="icon-search" style="margin-left:20px;" id="btnSearch">查询</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+
+
+    @*<div id="btn">
+            <a href="javascript:void(0)" class="easyui-linkbutton" id="btnok" iconcls="icon-ok">确定</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel"
+               onclick="javascript: $('#UserDialog').dialog('close')">关闭</a>
+        </div>*@
+
+    <script type="text/javascript">
+            var URL;
+            Date.prototype.format = function (format) {
+                var o = {
+                    "M+": this.getMonth() + 1,//月份
+                    "d+": this.getDate(),//日期
+                    "h+": this.getHours(),//小时
+                    "m+": this.getMinutes()//分钟
+
+                }
+                if (/(y+)/.test(format)) {
+                    format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                }
+                for (var k in o) {
+                    if (new RegExp("(" + k + ")").test(format))
+                        format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+                }
+                return format;
+            }
+            function DateTimeFormatter(value) {
+                if (value == undefined) {
+                    return "";
+                }
+                //将json转换为js时间格式
+                value = value.substr(1, value.length - 2);
+                var obj = eval('(' + "{Date:new" + value + "}" + ')');
+                var dateValue = obj["Date"];
+                if (dateValue.getFullYear() < 1900) {
+                    return "";
+                }
+                return dateValue.format("yyyy-MM-dd hh:mm");
+            }
+            function showdate(date) {
+                var d = date.replace('/Date(', '').replace(')/', '');
+                var date2 = new Date(parseInt(d));
+                return date2.toLocaleString();
+            }
+        $(function () {
+            //时间
+            var curr_time = new Date();
+            var strDate = curr_time.getFullYear() + "-";
+            strDate += curr_time.getMonth() + 1 + "-";
+            strDate += curr_time.getDate() + "-";
+            strDate += " " + curr_time.getHours() + ":";
+            strDate += curr_time.getMinutes() + ":";
+            strDate += curr_time.getSeconds();
+            $("#timestar").datetimebox("setValue", strDate);
+            $("#timestop").datetimebox("setValue", strDate);
+                $('#List').datagrid({
+                    url: '/Home/GetSoyList1',
+                    nowrap: true,
+                    method: 'post',
+                    fitColumns: true,
+                    sortName: 'SoyID',
+                    sortOrder: 'asc',
+                    idField: 'SoyID',
+                    striped: true,
+                    rownumbers: true,
+                    pageSize: 10,
+                    pageList: [5, 10, 20, 30, 40, 50],
+                    pagination: true,
+                    sortable: true,
+                    singleSelect: false,
+
+                    columns: [[
+                        { field: 'ck', checkbox: true },
+                        { field: 'SoyID', title: '记录编号', sortable: true, width: 100, height: 100 },
+                        { field: 'SenID', title: '传感器编号', width: 100 },
+                        { field: 'SenIP', sortable: true, title: '传感器IP', width: 100 },
+                        { field: 'SenZt', sortable: true, title: '传感器状态', width: 100 },
+                        {
+                            field: 'SoYTime', sortable: true, title: '记录时间', width: 100, formatter: formatDateBoxFull
+                        },
+                        { field: 'UserID', title: '用户编号', width: 100, align: 'right' }
+                    ]],
+                    toolbar: '#tb'
+                });
+            });
+            //
+
+            
+            $('#btnSearch').click(function () {
+                $('#List').datagrid('load', {
+                    IP: $("#IP").val(),
+                    UserName: $('#UserName').val(),
+                    timestar: document.getElementById('timestar').value+".000",
+                    timestop: document.getElementById('timestop').value+".000" 
+
+                })
+            })
+            $("#btnok").click(function () {
+                $("#ff").form('submit', {
+                    url: URL,
+                    onSubmit: function () {
+                        return $(this).form('validate');
+                    },
+                    success: function (result) {
+                        var result = eval("(" + result + ")");
+                        if (result.success) {
+
+
+                            $.messager.defaults = { ok: "确定", cancel: "取消" };
+                            $.messager.alert('提示', '成功');
+                            $("#List").datagrid('reload');
+                        }
+                        else {
+                            $.messager.show({
+                                title: Error,
+                                msg: result.msg
+                            })
+                        }
+                    }
+                })
+            })
+            function parseToDate(value) {
+                if (value == null || value == '') {
+                    return undefined;
+                }
+                var dt;
+                if (value instanceof Date) {
+                    dt = value;
+                } else {
+                    if (!isNaN(value)) {
+                        dt = new Date(value);
+                    } else if (value.indexOf('/Date') > -1) {
+                        value = value.replace(/\/Date\((-?\d+)\)\//, '$1');
+                        dt = new Date();
+                        dt.setTime(value);
+                    } else if (value.indexOf('/') > -1) {
+                        dt = new Date(Date.parse(value.replace(/-/g, '/')));
+                    } else {
+                        dt = new Date(value);
+                    }
+                }
+                return dt;
+            }
+            // 为Date类型拓展一个format方法，用于格式化日期
+            Date.prototype.format = function (format) // author: meizz
+            {
+                var o = {
+                    "M+": this.getMonth() + 1, // month
+                    "d+": this.getDate(), // day
+                    "h+": this.getHours(), // hour
+                    "m+": this.getMinutes(), // minute
+                    "s+": this.getSeconds(), // second
+                    "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
+                    "S": this.getMilliseconds()
+                    // millisecond
+                };
+                if (/(y+)/.test(format))
+                    format = format.replace(RegExp.$1, (this.getFullYear() + "")
+                        .substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(format))
+                        format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
+                            : ("00" + o[k]).substr(("" + o[k]).length));
+                return format;
+            };
+            /* 带时间 */
+            function formatDateBoxFull(value) {
+                if (value == null || value == '') {
+                    return '';
+                }
+                var dt = parseToDate(value);
+                return dt.format("yyyy-MM-dd hh:mm:ss");
+            }
+            function formatDatebox(value) {
+                if (value == null || value == '') {
+                    return '';
+                }
+                var dt = parseToDate(value);// 关键代码，将那个长字符串的日期值转换成正常的JS日期格式
+                return dt.format("yyyy-MM-dd"); // 这里用到一个javascript的Date类型的拓展方法，这个是自己添加的拓展方法，在后面的步骤3定义
+            }
+            //重写datagrid方法，使datagrid行编辑时，日期控件内的时间格式正确显示：
+            $.extend($.fn.datagrid.defaults.editors, {
+                datebox: {
+                    init: function (container, options) {
+                        var input = $('<input type="text">').appendTo(container);
+                        input.datebox(options);
+                        return input;
+                    },
+                    destroy: function (target) {
+                        $(target).datebox('destroy');
+                    },
+                    getValue: function (target) {
+                        return $(target).datebox('getValue');
+                    },
+                    setValue: function (target, value) {
+                        $(target).datebox('setValue', formatDatebox(value));
+                    },
+                    resize: function (target, width) {
+                        $(target).datebox('resize', width);
+                    }
+                },
+                datetimebox: {
+                    init: function (container, options) {
+                        var input = $('<input type="text">').appendTo(container);
+                        input.datetimebox(options);
+                        return input;
+                    },
+                    destroy: function (target) {
+                        $(target).datetimebox('destroy');
+                    },
+                    getValue: function (target) {
+                        return $(target).datetimebox('getValue');
+                    },
+                    setValue: function (target, value) {
+                        $(target).datetimebox('setValue', formatDateBoxFull(value));
+                    },
+                    resize: function (target, width) {
+                        $(target).datetimebox('resize', width);
+                    }
+                }
+            });
+    </script>
+    @*
+        增加
+    *@
+
+</body>

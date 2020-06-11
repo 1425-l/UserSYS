@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+    
+    <link href="~/Content/style/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js1/jquery.min.js"></script>
+    <script src="~/Content/js/jquery.cookie.js"></script>
+    <title>@ViewBag.uiu</title>
+    <script src="~/Content/libs/bootstrap-master/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+    <script src="~/Content/js1/Tdrag.js"></script>
+
+</head>
+<body ontouchstart>
+
+    <pre id="incomming"></pre>
+    <div class="header">
+        <div class="logo-text" style="margin-top:10px;margin-left:3%;float:left;">@ViewBag.uiu</div>
+        <div class="main">
+            <div id="gj" style="float:left;margin-top:2.5%;margin-left:10%;"></div>
+            <button id="btn2" class="" style="padding:2.5%;color:black;background-color:#70c7fa;border:none;outline:none;">
+                <div style="font-size:20px;">
+                    界面
+                </div>
+            </button>
+            <button id="btn1" class="" style="padding:2.5%;color:black;background-color:#70c7fa;border:none;outline:none;">
+                <div style="font-size:20px;">
+                    历史记录
+                </div>
+            </button>
+            <div style="margin-top:10px;float:right;">
+                <ul class="menu">
+                    @*<li>
+                            <img id="closes" src="~/Content/images1/q.png" />
+                        </li>*@
+                    <li id="yhm">用户名：@ViewBag.n</li>
+                    <li><a href="~/Home/Index">退出</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="inwrap" style="width:100%;">
+        <div class="main" style="width:100%">
+            <iframe id="ift" src="/Home/Contact" style="width:100%;overflow: hidden;"></iframe>
+        </div>
+    </div>
+    <script>
+        var a = 0;
+        $(function () {
+            if (a == 0) {
+               
+            } else {
+                
+            }
+        })
+        $("#btn1").click(function () {
+            a = 1;
+            document.getElementById("ift").src = "/Home/Soy";
+            document.getElementById("btn1").style.color = "blue";
+            document.getElementById("btn2").style.color = "black";
+        }); $("#btn2").click(function () {
+            a = 0;
+            document.getElementById("ift").src = "/Home/Contact";
+            document.getElementById("btn2").style.color = "blue";
+            document.getElementById("btn1").style.color = "black";
+
+        })
+        function setIframeHeight(iframe) {
+            if (iframe) {
+                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                if (iframeWin.document.body) {
+                    iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                }
+            }
+        };
+
+
+        window.onload = function () {
+            setIframeHeight(document.getElementById('ift'));
+
+        };
+
+    </script>
+</body>
+</html>

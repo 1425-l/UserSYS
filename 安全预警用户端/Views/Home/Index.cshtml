@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" style="overflow: hidden;">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <!-- 移动设备 viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit">
+    <!-- 禁止搜索引擎抓取 -->
+    <meta name="robots" content="nofollow">
+    <!-- 禁止百度SiteAPP转码 -->
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="">
+    <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <title>@ViewBag.u</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="~/Content/libs/fontawesome-free-5.9.0-web/css/all.min.css" rel="stylesheet" />
+    @*<link href="libs/fontawesome-free-5.9.0-web/css/all.min.css" rel="stylesheet" />*@
+    <link href="~/Content/libs/metismenu-master/metisMenu.min.css" rel="stylesheet" />
+    @*<link href="libs/metismenu-master/metisMenu.min.css" rel="stylesheet" />*@
+    <link href="~/Content/libs/web-icons-master/css/web-icons.css" rel="stylesheet" />
+    @*<link href="libs/web-icons-master/css/web-icons.css" rel="stylesheet" />*@
+    <link href="~/Content/css/core.css" rel="stylesheet" />
+    @*<link href="css/core.css" rel="stylesheet" />*@
+    <link href="~/Content/css/site.css" rel="stylesheet" />
+    @*<link href="css/site.css" rel="stylesheet" />*@
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+    @*<link href="css/main.css" rel="stylesheet" />*@
+    <!--js-->
+
+    <script src="~/Content/js/router.js"></script>
+    @*<script src="js/router.js"></script>*@
+
+    <script src="~/Content/libs/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/jquery.cookie.js"></script>
+    @*<script src="libs/jquery/jquery-3.2.1.min.js"></script>*@
+    <script src="~/Content/libs/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+    @*<script src="libs/jquery-mousewheel/jquery.mousewheel.min.js"></script>*@
+    <script src="~/Content/libs/bootstrap-master/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="libs/bootstrap-master/dist/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/Content/libs/metismenu-master/metisMenu.min.js"></script>
+    @*<script src="libs/metismenu-master/metisMenu.min.js"></script>*@
+    @*未找到！*@
+    <script src="~/admin/libs/sweetalert-master/sweetalert.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    @*<script src="js/main.js"></script>*@
+    <style type="text/css">
+        #hzy-login {
+            background-image: url('../../Content/images/login4.jpg');
+        }
+    </style>
+    <script>
+        $(function () {
+            $('#btnSubmit').click(function () {
+                var UserName = $("#UserName").val();
+                var UserPwd = $("#UserPwd").val();
+                var fuw = $("#text1").val();
+                if (UserName != "") {
+                    if (UserPwd != "") {
+                        $.post("../Home/Login?UserName=" + UserName + "&UserPwd=" + UserPwd, function (jsonData) {
+                            if (jsonData == "success") {
+                                $.cookie("a", UserName);
+                                $.cookie("b", fuw);
+
+                                //UserName: $("#UserName").val();
+                                //window.location.href = "../Home/Contact";
+                                window.location.href = "../Home/About";
+                            } else if (jsonData == "PassErro") {
+                                alert("密码错误");
+
+                            } else if (jsonData == 'usernoexsit') {
+                                alert("用户不存在");
+                            }
+                        })
+                    } else {
+                        alert('请输入密码')
+                    }
+                } else {
+                    alert("情输入用户名")
+                }
+            })
+        })
+    </script>
+
+</head>
+
+<body>
+
+    <div id="hzy-login" class="animated fadeIn">
+        <div class="login-modal">
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="login-panel">
+                    <h1 class="text-center">@ViewBag.u 用户界面</h1>
+
+                    <div class="container-fluid">
+                        <form action="/" method="post">
+                            <div class="pt-50">
+                                @*@using (Html.BeginForm())
+                                    {
+                                       @Html.ValidationSummary(true)
+                                       <fieldst>
+                                           <ul>
+                                               <li>
+                                                   @Html.LabelFor(m => m.AdminUser)
+                                                   @Html.TextBox(m => m.AdminUser)
+                                                   @Html.ValidationMessageFor(m => m.AdminUser)
+                                               </li>
+                                           </ul>
+                                       </fieldst>
+                                    }*@
+                                <div class="form-group form-material">
+                                    <label class="col-form-label" for="AdminUser" style="margin-bottom:10px;">帐户名</label>
+                                    <input type="text" class="form-control" id="UserName" name="UserName" placeholder="请输入用户名">
+                                </div>
+
+                                <div class="form-group form-material" style="margin-top:40px">
+                                    <label class="col-form-label" for="AdminPwd" style="margin-bottom:10px;">密码</label>
+                                    <input type="password" class="form-control" id="UserPwd" name="UserPwd" placeholder="请输入密码">
+                                </div>
+                                <div class="form-group form-material">
+                                    <label class="col-form-label" for="AdminUser" style="margin-bottom:10px;">服务器</label>
+                                    <input type="text" id="text1" value="ws://localhost:7181/" style="" class="form-control" />
+                                    @*<button class="btn-contact" id="btn1" style="width:8%;">连接</button>*@
+                                </div>
+                                @*<div class="form-group form-material">
+                                        <label class="col-form-label" for="inputAddons">验证码</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="loginCode" placeholder="请输入验证码">
+                                            <div class="input-group-append">
+                                                <img class="yzm" src="http://www.suiyu.org.cn/Admin/Login/yzm" onclick="$(this).attr('src','http://www.suiyu.org.cn/Admin/Login/yzm'+'/'+new Date().getTime());" width="100" style="height: 31px; border-bottom: 1px solid #e4eaec;">
+                                            </div>
+                                        </div>
+                                    </div>*@
+
+
+                                @*<a class="btn btn-block btn-primary btn-lg mt-60" href="main.html">登录</a>*@
+                                <a class="btn btn-block btn-primary btn-lg mt-60" id="btnSubmit">登录</a>
+
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+    <title></title>
+
+
+    <link href="~/Content/lbo/style1/style.css" rel="stylesheet" />
+    <script src="~/Content/lbo/js1/jquery.min.js"></script>
+    <script src="~/Content/js/jquery.cookie.js"></script>
+    <script src="~/Content/lbo/js1/Tdrag.js"></script>
+    <script src="~/Content/lbo/js1/vue.js"></script>
+</head>
+<body ontouchstart>
+
+
+    @*<div class="header">
+            <div class="main">
+                <div class="logo-text">机场报道安全监控系统</div>
+                <div id="gj" style="float:left;margin-top:2.5%;margin-left:10%;"></div>
+
+                <ul class="menu">
+                    <li>
+                        <img id="closes" src="~/Content/images1/q.png" />
+                    </li>
+                    <li id="yhm">用户名：@ViewBag.n</li>
+                    <li><a href="~/Home/Index">退出</a></li>
+                    <li><a href="~/Home/Soy">历史记录查看</a></li>
+
+                </ul>
+            </div>
+        </div>*@
+    <div id="app">
+
+        <div class="inwrap" style="width:100%">
+            <div class="main" style="width:100%">
+                <div class="panel clearfix">
+                    <div class="gd-main" style="width:100%">
+                        <div class="gd-container" style="width:100%" id="box">
+                            <div v-for="(item,index) in list"
+                                 :data="index"
+                                 style="position: absolute;z-index: 2"
+                                 :style="{left: item.positionX + 'px',top: item.positionY + 'px' }" class="gd-item">
+                                {{item.title}}
+                                <sub>{{item.title2}}</sub>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="gd-form">
+                    <button class="btn-contact" id="btn1" style="width:8%;">连接</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        //var i = 1123; i = i + i;
+        //数据库赋值
+        var app = new Vue({
+            el: '#app',
+            data: {
+                positionX: 0,
+                positionY: 0,
+                list: [
+                    {
+                        title: 'Acccc',
+                        title2: '58',
+                        positionX: 100,
+                        positionY: 120,
+                    },
+                    {
+                        title: 'A',
+                        title2: '5882',
+                        positionX: 80,
+                        positionY: 90,
+                    },
+                    {
+                        title: 'B',
+                        title2: '51',
+                        positionX: 30,
+                        positionY: 40,
+                    },
+                    {
+                        title: 'B',
+                        title2: '5',
+                        positionX: 50,
+                        positionY: 60,
+                    }
+                    ,
+                    {
+                        title: 'C',
+                        title2: '51',
+                        positionX: 100,
+                        positionY: 100,
+                    },
+                    {
+                        title: 'C',
+                        title2: '52',
+                        positionX: 90,
+                        positionY: 60,
+                    }
+                ]
+            },
+            mounted() {
+                this.getdata()
+            },
+            methods: {
+                getdata() {
+                    var data = localStorage.getItem('data');
+                    if (data) {
+                        //this.list = JSON.parse(data);
+                    }
+                },
+            },
+            computed: {},
+        });
+        jQuery(function () {
+            $(".gd-container .gd-item").Tdrag({
+                scope: ".gd-container",
+                axis: "all",
+                cbMove: function (e) {
+                    var index = e.getAttribute("data");
+                    app.list[index].positionX = parseInt(e.style.left)
+                    app.list[index].positionY = parseInt(e.style.top)
+                    localStorage.setItem('data', JSON.stringify(app.list))
+                    //数据库存储
+
+                },
+            });
+            localStorage.setItem('data', JSON.stringify(app.list));
+        })
+
+
+
+    </script>
+    <style>
+
+        .gd-container {
+            moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .gd-item {
+            moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            .gd-item div {
+                /*position: absolute;*/
+                z-index: 2;
+            }
+
+            .gd-item sub {
+                /*position: absolute;*/
+                z-index: 1;
+            }
+    </style>
+</body>
+</html>
